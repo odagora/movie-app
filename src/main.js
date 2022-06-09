@@ -1,0 +1,1 @@
+console.log(`API URL= https://example.com/hi/?api_key=${API_KEY}`);

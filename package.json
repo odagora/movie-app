@@ -1,0 +1,19 @@
+{
+  "name": "movie-app",
+  "version": "1.0.0",
+  "description": "Movie App in JavaScript using the TMDB API",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/odagora/movie-app.git"
+  },
+  "author": "Daniel Gonzalez <oscar.d.gonzalez@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/odagora/movie-app/issues"
+  },
+  "homepage": "https://github.com/odagora/movie-app#readme"
+}
