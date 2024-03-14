@@ -23,4 +23,27 @@ async function getTrendingMoviesPreview() {
     movieTrendingPreviewContainer.append(...moviesList)
 }
 
+async function getCategoriesPreview() {
+  const res = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
+  const data = await res.json();
+  const categories = data.genres;
+
+  const categoriesPreviewContainer = document.querySelector('.categoriesPreview-list');
+  const categoriesList = [];
+  categories.forEach(category => {
+    const categoryContainer = document.createElement('div');
+    const categoryTitle = document.createElement('h3');
+    const categoryTitleName = document.createTextNode(category.name);
+
+    categoryContainer.classList.add('category-container');
+    categoryTitle.classList.add('category-title');
+    categoryTitle.setAttribute('id', `id${category.id}`)
+    categoryTitle.appendChild(categoryTitleName);
+    categoryContainer.appendChild(categoryTitle);
+    categoriesList.push(categoryContainer);
+  })
+  categoriesPreviewContainer.append(...categoriesList)
+}
+
 getTrendingMoviesPreview();
+getCategoriesPreview();
