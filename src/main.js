@@ -52,6 +52,3 @@ async function getCategoriesPreview() {
   })
   categoriesPreviewContainer.append(...categoriesList)
 }
-
-getTrendingMoviesPreview();
-getCategoriesPreview();
