@@ -10,7 +10,7 @@ trendingBtn.addEventListener('click', () => {
 })
 
 arrowBtn.addEventListener('click', () => {
-  location.hash = '';
+  document.domain !== '127.0.0.1' ? location.hash = '#home': history.back();
 })
 
 function navigator() {
@@ -100,6 +100,9 @@ function trendsPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+
+  headerCategoryTitle.textContent = 'Tendencias';
+  getTrendingMovies();
 }
 
 function searchPage() {
