@@ -45,6 +45,7 @@ function homePage() {
   categoriesPreviewSection.classList.remove('inactive');
   genericSection.classList.add('inactive');
   movieDetailSection.classList.add('inactive');
+  footerSection.classList.remove('inactive');
 
   getTrendingMoviesPreview();
   getCategoriesPreview();
@@ -85,6 +86,7 @@ function movieDetailsPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.add('inactive');
   movieDetailSection.classList.remove('inactive');
+  footerSection.classList.add('inactive');
 
   const [_, movieId] = location.hash.split('=');
   getMovieById(movieId);

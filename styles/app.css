@@ -23,6 +23,8 @@
   --font-weight-title2: 700;
   --font-weight-text1: 400;
   --font-weight-text2: 500;
+
+  --max-width: 600px;
 }
 
 html {
@@ -35,7 +37,8 @@ body {
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-text1);
   font-size: 16px;
-  margin: 4px 0 0 0;
+  margin: 4px auto;
+  max-width: var(--max-width);
   padding: 0;
 }
 
@@ -129,6 +132,7 @@ button {
   position: fixed;
   top: 0;
   width: 100%;
+  max-width: var(--max-width);
 }
 
 .header-container--categoryView {
@@ -277,6 +281,7 @@ button {
 /* Movie Detail */
 .movieDetail-container {
   width: 100%;
+  max-width: var(--max-width);
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   padding: 32px 24px;
