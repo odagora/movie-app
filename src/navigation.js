@@ -19,6 +19,17 @@ function navigator() {
   location.hash.startsWith('#movie') ? movieDetailsPage() :
   location.hash.startsWith('#category') ? categoriesPage() :
   homePage()
+
+  smoothScroll();
+}
+
+function smoothScroll() {
+  const currentScroll = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+  if (currentScroll > 0) {
+    window.requestAnimationFrame(smoothScroll);
+    window.scrollTo (0, currentScroll - (currentScroll / 5));
+  }
 }
 
 function homePage() {
