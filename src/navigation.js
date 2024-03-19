@@ -57,6 +57,7 @@ function categoriesPage() {
   headerSection.style.background = '';
   arrowBtn.classList.remove('inactive');
   headerTitle.classList.add('inactive');
+  arrowBtn.classList.remove('header-arrow--white');
   headerCategoryTitle.classList.remove('inactive');
   searchForm.classList.add('inactive');
   trendingPreviewSection.classList.add('inactive');
@@ -84,6 +85,9 @@ function movieDetailsPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.add('inactive');
   movieDetailSection.classList.remove('inactive');
+
+  const [_, movieId] = location.hash.split('=');
+  getMovieById(movieId);
 }
 
 function trendsPage() {
