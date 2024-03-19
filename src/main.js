@@ -11,12 +11,11 @@ const api = axios.create({
   }
 });
 
-async function getTrendingMoviesPreview() {
-    const { data } = await api(`/trending/movie/day`);
-    const movies = data.results;
-
-    trendingMoviesPreviewList.innerHTML = '';
+// Utils
+function createMovies(movies, container) {
+  container.innerHTML = '';
     const moviesList = []
+
     movies.forEach(movie => {
       const movieContainer = document.createElement('div');
       const movieImage = document.createElement('img');
@@ -29,15 +28,13 @@ async function getTrendingMoviesPreview() {
       moviesList.push(movieContainer);
     })
 
-    trendingMoviesPreviewList.append(...moviesList)
+    container.append(...moviesList)
 }
 
-async function getCategoriesPreview() {
-  const { data } = await api(`/genre/movie/list`);
-  const categories = data.genres;
-
-  categoriesPreviewList.innerHTML = '';
+function createCategories(categories, container) {
+  container.innerHTML = '';
   const categoriesList = [];
+
   categories.forEach(category => {
     const categoryContainer = document.createElement('div');
     const categoryTitle = document.createElement('h3');
@@ -51,7 +48,22 @@ async function getCategoriesPreview() {
     categoryContainer.appendChild(categoryTitle);
     categoriesList.push(categoryContainer);
   })
-  categoriesPreviewList.append(...categoriesList)
+  container.append(...categoriesList)
+}
+
+// API calls
+async function getTrendingMoviesPreview() {
+    const { data } = await api(`/trending/movie/day`);
+    const movies = data.results;
+
+    createMovies(movies, trendingMoviesPreviewList);
+}
+
+async function getCategoriesPreview() {
+  const { data } = await api(`/genre/movie/list`);
+  const categories = data.genres;
+
+  createCategories(categories, categoriesPreviewList);
 }
 
 async function getMoviesByCategory(id) {
@@ -62,19 +74,5 @@ async function getMoviesByCategory(id) {
   });
   const movies = data.results;
 
-  genericSection.innerHTML = '';
-
-  const moviesList = [];
-  movies.forEach(movie => {
-    const movieContainer = document.createElement('div');
-    const movieImage = document.createElement('img');
-
-    movieContainer.classList.add('movie-container');
-    movieImage.classList.add('movie-img');
-    movieImage.setAttribute('alt', movie.title);
-    movieImage.setAttribute('src', `${BASE_IMAGE_URL}/${movie.poster_path}`);
-    movieContainer.appendChild(movieImage);
-    moviesList.push(movieContainer);
-  })
-  genericSection.append(...moviesList)
+  createMovies(movies, genericSection);
 }
