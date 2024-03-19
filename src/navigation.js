@@ -1,8 +1,8 @@
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
 
-searchForm.addEventListener('click', () => {
-  location.hash = '#search=';
+searchFormBtn.addEventListener('click', () => {
+  location.hash = `#search=${searchFormInput.value.trim()}`;
 })
 
 trendingBtn.addEventListener('click', () => {
@@ -116,6 +116,9 @@ function searchPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+
+  const [_, query] = location.hash.split('=');
+  getMoviesBySearch(query);
 }
 
 function error404() {
