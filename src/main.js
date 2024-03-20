@@ -11,6 +11,36 @@ const api = axios.create({
   }
 });
 
+// Events
+const moviesNodes = [
+  trendingMoviesPreviewList,
+  genericSection,
+  relatedMoviesContainer
+];
+
+const categoriesNodes = [
+  categoriesPreviewList,
+  movieDetailCategoriesList
+];
+
+moviesNodes.forEach(node => node.addEventListener('click', (event) => {
+  if (event.target.nodeName === 'IMG') {
+    const id = event.target.dataset.id;
+    const title = event.target.dataset.title;
+
+    location.hash = `#movie=${id}-${title}`;
+  }
+}));
+
+categoriesNodes.forEach(node => node.addEventListener('click', (event) => {
+  if (event.target.nodeName === 'H3') {
+    const id = event.target.dataset.id;
+    const name = event.target.dataset.name;
+
+    location.hash = `#category=${id}-${name}`;
+  }
+}))
+
 // Utils
 function createMovies(movies, container) {
   container.innerHTML = '';
@@ -24,7 +54,10 @@ function createMovies(movies, container) {
       movieImage.classList.add('movie-img');
       movieImage.setAttribute('alt', movie.title);
       movieImage.setAttribute('src', `${BASE_IMAGE_URL(300)}${movie.poster_path}`);
-      movieImage.addEventListener('click', () => location.hash = `#movie=${movie.id}`);
+      // movieImage.addEventListener('click', () => location.hash = `#movie=${movie.id}`);
+      movieImage.setAttribute('data-id', movie.id);
+      movieImage.setAttribute('data-title', movie.title);
+
       movieContainer.appendChild(movieImage);
       moviesList.push(movieContainer);
     })
@@ -44,7 +77,10 @@ function createCategories(categories, container) {
     categoryContainer.classList.add('category-container');
     categoryTitle.classList.add('category-title');
     categoryTitle.setAttribute('id', `id${category.id}`)
-    categoryTitle.addEventListener('click', () => location.hash = `#category=${category.id}-${category.name}`)
+    // categoryTitle.addEventListener('click', () => location.hash = `#category=${category.id}-${category.name}`)
+    categoryTitle.setAttribute('data-id', category.id);
+    categoryTitle.setAttribute('data-name', category.name);
+
     categoryTitle.appendChild(categoryTitleName);
     categoryContainer.appendChild(categoryTitle);
     categoriesList.push(categoryContainer);

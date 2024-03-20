@@ -68,7 +68,7 @@ function categoriesPage() {
 
   const [_, categoryUrl] = location.hash.split('=');
   const [categoryId, categoryName] = categoryUrl.split('-');
-  headerCategoryTitle.textContent = decodeURI(categoryName);
+  headerCategoryTitle.textContent = decodeURI(categoryName).replace(/\b\w/g, c => c.toUpperCase());
   getMoviesByCategory(categoryId);
 }
 
