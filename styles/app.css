@@ -288,6 +288,7 @@ button {
   margin-top: 403px;
   z-index: 1;
   position: absolute;
+  overflow-x: hidden;
   background-color: var(--purple-light-1);
 }
 
@@ -317,7 +318,7 @@ button {
 
 .relatedMovies-container {
   margin-top: 24px;
-  height: 216px;
+  height: 232px;
 }
 
 .relatedMovies-title {
@@ -329,8 +330,9 @@ button {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  width: calc(100vw - 24px);
+  max-width: calc(var(--max-width) - 48px);
   padding-bottom: 16px;
+  max-height: 200px;
 }
 
 .relatedMovies-scrollContainer .movie-container {

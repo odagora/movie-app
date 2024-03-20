@@ -20,7 +20,6 @@ const moviesNodes = [
 
 const categoriesNodes = [
   categoriesPreviewList,
-  movieDetailCategoriesList
 ];
 
 moviesNodes.forEach(node => node.addEventListener('click', (event) => {
@@ -54,7 +53,7 @@ function createMovies(movies, container) {
       movieImage.classList.add('movie-img');
       movieImage.setAttribute('alt', movie.title);
       movieImage.setAttribute('src', `${BASE_IMAGE_URL(300)}${movie.poster_path}`);
-      // movieImage.addEventListener('click', () => location.hash = `#movie=${movie.id}`);
+
       movieImage.setAttribute('data-id', movie.id);
       movieImage.setAttribute('data-title', movie.title);
 
@@ -77,7 +76,6 @@ function createCategories(categories, container) {
     categoryContainer.classList.add('category-container');
     categoryTitle.classList.add('category-title');
     categoryTitle.setAttribute('id', `id${category.id}`)
-    // categoryTitle.addEventListener('click', () => location.hash = `#category=${category.id}-${category.name}`)
     categoryTitle.setAttribute('data-id', category.id);
     categoryTitle.setAttribute('data-name', category.name);
 
@@ -180,6 +178,15 @@ async function getTrendingMovies() {
 async function getMovieById(id) {
   const { data: movie } = await api(`/movie/${id}`);
 
-  createMovieDetail(movie, movieDetailSection);
+  createMovieDetail(movie, movieDetails);
   createCategories(movie.genres, movieDetailCategoriesList);
+  getRelatedMoviesById(movie.id);
+}
+
+async function getRelatedMoviesById(id) {
+  const { data } = await api(`/movie/${id}/similar`);
+  const relatedMovies = data.results;
+  console.log(relatedMovies);
+
+  createMovies(relatedMovies, relatedMoviesContainer);
 }

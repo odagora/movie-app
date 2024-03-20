@@ -13,8 +13,9 @@ const footerSection = $("#footer");
 const searchForm = $("#searchForm");
 const trendingMoviesPreviewList = $(".trendingPreview-movieList");
 const categoriesPreviewList = $(".categoriesPreview-list");
-const movieDetailCategoriesList = $(".movieDetail-categories-list");
+const movieDetailCategoriesList = $(".categories-list");
 const relatedMoviesContainer = $(".relatedMovies-scrollContainer");
+const movieDetails = $(".movie-details");
 
 // Elements
 const headerTitle = $(".header-title");
