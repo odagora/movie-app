@@ -275,6 +275,7 @@ button {
 
 .genericList-container .movie-img {
   width: 100%;
+  height: 400px;
 }
 
 
@@ -366,46 +367,30 @@ footer {
 }
 
 /* Skeleton */
-.movie-container--loading {
-  background: var(--purple-light-2);
-  border-radius: 8px;
-  height: 225px;
-  width: 150px;
-  margin-bottom: 15px;
-  animation: loading-skeleton infinite 1.5s;
+.skeleton-text,
+.skeleton-desc {
+  width: 100%;
+  height: 16px;
+  margin: 8px;
+  border-radius: 4px;
 }
 
-.movie-container--loading:nth-child(2) {
-  animation-delay: 0.1s;
+/* Definimos un ancho más corto para la linea final del párrafo */
+.skeleton-desc:last-child {
+  width: 80%;
 }
 
-.movie-container--loading:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-.movie-container--loading:nth-child(4) {
-  animation-delay: 0.3s;
-}
-
-.category-container--loading {
-  background: var(--purple-light-2);
-  border-radius: 8px;
-  height: 25px;
-  width: 45%;
-  margin-bottom: 15px;
-  animation: loading-skeleton infinite 0.5s;
-}
-
-.category-container--loading:nth-child(even) {
-  animation-delay: 0.1s;
+.loading-skeleton {
+  animation: loading-skeleton 1s linear infinite alternate;
 }
 
 /* Animations */
 @keyframes loading-skeleton {
-  0%, 100% {
-    opacity: 100%;
+  0% {
+    background-color: hsl(200, 20%, 70%);
   }
-  50% {
-    opacity: 0%;
+
+  100% {
+    background-color: hsl(200, 20%, 95%);
   }
 }

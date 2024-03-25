@@ -11,6 +11,50 @@ const api = axios.create({
   }
 });
 
+// Skeletons
+function addLoadingMoviesSkeleton(container, quantity) {
+  const elementsList = [];
+  const movieContainer = document.createElement('div');
+  const movieImage = document.createElement('img');
+
+  movieContainer.classList.add('movie-container');
+  movieImage.classList.add('movie-img', 'loading-skeleton');
+  movieContainer.appendChild(movieImage);
+
+  for (let i = 0; i < quantity; i++) {
+    elementsList.push(movieContainer.cloneNode(true));
+  }
+  container.append(...elementsList);
+}
+
+function addLoadingCategoriesSkeleton(container, quantity) {
+  const elementsList = [];
+  const categoryContainer = document.createElement('div');
+  const categoryTitle = document.createElement('h3');
+
+  categoryContainer.classList.add('category-container');
+  categoryTitle.classList.add('skeleton-text', 'loading-skeleton');
+  categoryContainer.appendChild(categoryTitle);
+
+  for (let i = 0; i < quantity; i++) {
+    elementsList.push(categoryContainer.cloneNode(true));
+  }
+
+  container.append(...elementsList);
+}
+
+function addLoadingMovieDetailSkeleton(container, quantity) {
+  const elementsList = [];
+  const textContainer = document.createElement('div');
+  textContainer.classList.add('skeleton-desc', 'loading-skeleton');
+
+  for (let i = 0; i < quantity; i++) {
+    elementsList.push(textContainer.cloneNode(true));
+  }
+
+  container.append(...elementsList)
+}
+
 // Events
 const moviesNodes = [
   trendingMoviesPreviewList,
@@ -133,13 +177,15 @@ function createSearchMovies(movies, container) {
 
 // API calls
 async function getTrendingMoviesPreview() {
-    const { data } = await api(`/trending/movie/day`);
-    const movies = data.results;
+  addLoadingMoviesSkeleton(trendingMoviesPreviewList, 4);
+  const { data } = await api(`/trending/movie/day`);
+  const movies = data.results;
 
-    createMovies(movies, trendingMoviesPreviewList);
+  createMovies(movies, trendingMoviesPreviewList);
 }
 
 async function getCategoriesPreview() {
+  addLoadingCategoriesSkeleton(categoriesPreviewList, 16);
   const { data } = await api(`/genre/movie/list`);
   const categories = data.genres;
 
@@ -147,6 +193,7 @@ async function getCategoriesPreview() {
 }
 
 async function getMoviesByCategory(id) {
+  addLoadingMoviesSkeleton(genericSection, 4);
   const { data } = await api(`/discover/movie`, {
     params: {
       with_genres: id,
@@ -158,6 +205,7 @@ async function getMoviesByCategory(id) {
 }
 
 async function getMoviesBySearch(query) {
+  addLoadingMoviesSkeleton(genericSection, 4);
   const { data } = await api(`/search/movie`, {
     params: {
       query,
@@ -169,6 +217,7 @@ async function getMoviesBySearch(query) {
 }
 
 async function getTrendingMovies() {
+  addLoadingMoviesSkeleton(genericSection, 4);
   const { data } = await api(`/trending/movie/day`);
   const movies = data.results;
 
@@ -176,6 +225,9 @@ async function getTrendingMovies() {
 }
 
 async function getMovieById(id) {
+  addLoadingMovieDetailSkeleton(movieDetails, 4);
+  addLoadingCategoriesSkeleton(movieDetailCategoriesList, 4);
+  addLoadingMoviesSkeleton(relatedMoviesContainer, 4);
   const { data: movie } = await api(`/movie/${id}`);
 
   createMovieDetail(movie, movieDetails);
