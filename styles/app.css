@@ -384,6 +384,11 @@ footer {
   animation: loading-skeleton 1s linear infinite alternate;
 }
 
+/* Lazy loading */
+.fade-in {
+  animation: fade-in 2s;
+}
+
 /* Animations */
 @keyframes loading-skeleton {
   0% {
@@ -392,5 +397,15 @@ footer {
 
   100% {
     background-color: hsl(200, 20%, 95%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

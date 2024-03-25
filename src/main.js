@@ -11,6 +11,8 @@ const api = axios.create({
   }
 });
 
+const intersectionObserverIsSupported = 'IntersectionObserver' in window
+
 // Skeletons
 function addLoadingMoviesSkeleton(container, quantity) {
   const elementsList = [];
@@ -95,11 +97,20 @@ function createMovies(movies, container) {
 
       movieContainer.classList.add('movie-container');
       movieImage.classList.add('movie-img');
-      movieImage.setAttribute('alt', movie.title);
-      movieImage.setAttribute('src', `${BASE_IMAGE_URL(300)}${movie.poster_path}`);
-
       movieImage.setAttribute('data-id', movie.id);
       movieImage.setAttribute('data-title', movie.title);
+
+      if (intersectionObserverIsSupported) {
+        movieImage.setAttribute('data-src', `${BASE_IMAGE_URL(300)}${movie.poster_path}`);
+        movieImage.setAttribute('data-alt', movie.title);
+      } else {
+        if (movie.poster_path !== null) {
+          movieImage.setAttribute('alt', movie.title);
+          movieImage.setAttribute('src', `${BASE_IMAGE_URL(300)}${movie.poster_path}`);
+        }
+      }
+
+      registerImage(movieImage);
 
       movieContainer.appendChild(movieImage);
       moviesList.push(movieContainer);
@@ -238,7 +249,6 @@ async function getMovieById(id) {
 async function getRelatedMoviesById(id) {
   const { data } = await api(`/movie/${id}/similar`);
   const relatedMovies = data.results;
-  console.log(relatedMovies);
 
   createMovies(relatedMovies, relatedMoviesContainer);
 }
