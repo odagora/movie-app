@@ -94,6 +94,7 @@ function createMovies(movies, container) {
     movies.forEach(movie => {
       const movieContainer = document.createElement('div');
       const movieImage = document.createElement('img');
+      const movieSrc = movie.poster_path ? `${BASE_IMAGE_URL(300)}${movie.poster_path}` : `https://via.placeholder.com/300x450/5c218a/ffffff?text=${movie.title}`;
 
       movieContainer.classList.add('movie-container');
       movieImage.classList.add('movie-img');
@@ -101,12 +102,12 @@ function createMovies(movies, container) {
       movieImage.setAttribute('data-title', movie.title);
 
       if (intersectionObserverIsSupported) {
-        movieImage.setAttribute('data-src', `${BASE_IMAGE_URL(300)}${movie.poster_path}`);
+        movieImage.setAttribute('data-src', movieSrc);
         movieImage.setAttribute('data-alt', movie.title);
       } else {
         if (movie.poster_path !== null) {
           movieImage.setAttribute('alt', movie.title);
-          movieImage.setAttribute('src', `${BASE_IMAGE_URL(300)}${movie.poster_path}`);
+          movieImage.setAttribute('src', movieSrc);
         }
       }
 
