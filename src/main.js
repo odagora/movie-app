@@ -21,6 +21,7 @@ function addLoadingMoviesSkeleton(container, quantity) {
 
   movieContainer.classList.add('movie-container');
   movieImage.classList.add('movie-img', 'loading-skeleton');
+  movieContainer.id = 'loading-screen';
   movieContainer.appendChild(movieImage);
 
   for (let i = 0; i < quantity; i++) {
@@ -36,6 +37,7 @@ function addLoadingCategoriesSkeleton(container, quantity) {
 
   categoryContainer.classList.add('category-container');
   categoryTitle.classList.add('skeleton-text', 'loading-skeleton');
+  categoryContainer.id = 'loading-screen';
   categoryContainer.appendChild(categoryTitle);
 
   for (let i = 0; i < quantity; i++) {
@@ -49,12 +51,27 @@ function addLoadingMovieDetailSkeleton(container, quantity) {
   const elementsList = [];
   const textContainer = document.createElement('div');
   textContainer.classList.add('skeleton-desc', 'loading-skeleton');
+  textContainer.id = 'loading-screen';
 
   for (let i = 0; i < quantity; i++) {
     elementsList.push(textContainer.cloneNode(true));
   }
 
   container.append(...elementsList)
+}
+
+function removeLoadingSkeletonContainer(container) {
+  const nodeList = container.childNodes;
+  const nodeArray = [...nodeList];
+  nodeArray
+    .slice()
+    .reverse()
+    .forEach(node => {
+      if (node.id === 'loading-screen') {
+        node.remove();
+      }
+    }
+  )
 }
 
 // Events
@@ -88,7 +105,6 @@ categoriesNodes.forEach(node => node.addEventListener('click', (event) => {
 
 // Utils
 function createMovies(movies, container) {
-  container.innerHTML = '';
     const moviesList = []
 
     movies.forEach(movie => {
@@ -187,13 +203,26 @@ function createSearchMovies(movies, container) {
   })
 }
 
+function createButtonLoadMore(container) {
+  const loadMoreButton = document.createElement('button');
+
+  loadMoreButton.innerHTML = 'Cargar más';
+  loadMoreButton.classList.add('button-load-more');
+  container.appendChild(loadMoreButton);
+
+  return loadMoreButton;
+}
+
 // API calls
 async function getTrendingMoviesPreview() {
   addLoadingMoviesSkeleton(trendingMoviesPreviewList, 4);
   const { data } = await api(`/trending/movie/day`);
   const movies = data.results;
 
+  trendingMoviesPreviewList.innerHTML = '';
+
   createMovies(movies, trendingMoviesPreviewList);
+  removeLoadingSkeletonContainer(trendingMoviesPreviewList);
 }
 
 async function getCategoriesPreview() {
@@ -201,39 +230,72 @@ async function getCategoriesPreview() {
   const { data } = await api(`/genre/movie/list`);
   const categories = data.genres;
 
+  categoriesPreviewList.innerHTML = '';
+
   createCategories(categories, categoriesPreviewList);
+  removeLoadingSkeletonContainer(categoriesPreviewList);
 }
 
-async function getMoviesByCategory(id) {
+async function getMoviesByCategory(id, nextPage = false, page = 1) {
+  const currentPage = nextPage ? page + 1 : page;
+
   addLoadingMoviesSkeleton(genericSection, 4);
   const { data } = await api(`/discover/movie`, {
     params: {
       with_genres: id,
+      page: currentPage
     }
   });
   const movies = data.results;
 
   createMovies(movies, genericSection);
+  removeLoadingSkeletonContainer(genericSection);
+
+  const buttonLoadMoreByCategory = createButtonLoadMore(genericSection);
+  buttonLoadMoreByCategory.addEventListener('click', () => {
+    buttonLoadMoreByCategory.remove();
+    getMoviesByCategory(id, true, currentPage);
+  });
 }
 
-async function getMoviesBySearch(query) {
+async function getMoviesBySearch(query, nextPage = false, page = 1) {
+  const currentPage = nextPage ? page + 1 : page;
   addLoadingMoviesSkeleton(genericSection, 4);
   const { data } = await api(`/search/movie`, {
     params: {
       query,
+      page: currentPage
     }
   });
   const movies = data.results;
 
   createMovies(movies, genericSection);
+  removeLoadingSkeletonContainer(genericSection);
+
+  const buttonLoadMoreBySearch = createButtonLoadMore(genericSection);
+  buttonLoadMoreBySearch.addEventListener('click', () => {
+    buttonLoadMoreBySearch.remove();
+    getMoviesBySearch(query, true, currentPage);
+  });
 }
 
-async function getTrendingMovies() {
+async function getTrendingMovies(nextPage = false, page = 1) {
+  const currentPage = nextPage ? page + 1 : page;
   addLoadingMoviesSkeleton(genericSection, 4);
-  const { data } = await api(`/trending/movie/day`);
+  const { data } = await api(`/trending/movie/day`, {
+    params: {
+      page: currentPage
+    }
+  });
   const movies = data.results;
 
   createMovies(movies, genericSection);
+  removeLoadingSkeletonContainer(genericSection);
+  const buttonLoadMoreTrendingMovies = createButtonLoadMore(genericSection);
+  buttonLoadMoreTrendingMovies.addEventListener('click', () => {
+    buttonLoadMoreTrendingMovies.remove();
+    getTrendingMovies(true, currentPage);
+  });
 }
 
 async function getMovieById(id) {
@@ -245,11 +307,16 @@ async function getMovieById(id) {
   createMovieDetail(movie, movieDetails);
   createCategories(movie.genres, movieDetailCategoriesList);
   getRelatedMoviesById(movie.id);
+
+  removeLoadingSkeletonContainer(movieDetails);
 }
 
 async function getRelatedMoviesById(id) {
   const { data } = await api(`/movie/${id}/similar`);
   const relatedMovies = data.results;
 
+  relatedMoviesContainer.innerHTML = '';
+
   createMovies(relatedMovies, relatedMoviesContainer);
+  removeLoadingSkeletonContainer(relatedMoviesContainer);
 }

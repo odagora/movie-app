@@ -366,6 +366,16 @@ footer {
   display: none;
 }
 
+/* Load more button */
+.button-load-more {
+  border-radius: 8px;
+  height: 56px;
+  width: 80%;
+  margin: 12px auto;
+  font-size: 20px;
+  font-weight: 400;
+}
+
 /* Skeleton */
 .skeleton-text,
 .skeleton-desc {
