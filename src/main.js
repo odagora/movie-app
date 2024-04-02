@@ -236,66 +236,45 @@ async function getCategoriesPreview() {
   removeLoadingSkeletonContainer(categoriesPreviewList);
 }
 
-async function getMoviesByCategory(id, nextPage = false, page = 1) {
-  const currentPage = nextPage ? page + 1 : page;
-
+async function getMoviesByCategory(id, page = 1) {
   addLoadingMoviesSkeleton(genericSection, 4);
   const { data } = await api(`/discover/movie`, {
     params: {
       with_genres: id,
-      page: currentPage
+      page
     }
   });
   const movies = data.results;
 
   createMovies(movies, genericSection);
   removeLoadingSkeletonContainer(genericSection);
-
-  const buttonLoadMoreByCategory = createButtonLoadMore(genericSection);
-  buttonLoadMoreByCategory.addEventListener('click', () => {
-    buttonLoadMoreByCategory.remove();
-    getMoviesByCategory(id, true, currentPage);
-  });
 }
 
-async function getMoviesBySearch(query, nextPage = false, page = 1) {
-  const currentPage = nextPage ? page + 1 : page;
+async function getMoviesBySearch(query, page = 1) {
   addLoadingMoviesSkeleton(genericSection, 4);
   const { data } = await api(`/search/movie`, {
     params: {
       query,
-      page: currentPage
+      page
     }
   });
   const movies = data.results;
 
   createMovies(movies, genericSection);
   removeLoadingSkeletonContainer(genericSection);
-
-  const buttonLoadMoreBySearch = createButtonLoadMore(genericSection);
-  buttonLoadMoreBySearch.addEventListener('click', () => {
-    buttonLoadMoreBySearch.remove();
-    getMoviesBySearch(query, true, currentPage);
-  });
 }
 
-async function getTrendingMovies(nextPage = false, page = 1) {
-  const currentPage = nextPage ? page + 1 : page;
+async function getTrendingMovies(page = 1) {
   addLoadingMoviesSkeleton(genericSection, 4);
   const { data } = await api(`/trending/movie/day`, {
     params: {
-      page: currentPage
+      page
     }
   });
   const movies = data.results;
 
   createMovies(movies, genericSection);
   removeLoadingSkeletonContainer(genericSection);
-  const buttonLoadMoreTrendingMovies = createButtonLoadMore(genericSection);
-  buttonLoadMoreTrendingMovies.addEventListener('click', () => {
-    buttonLoadMoreTrendingMovies.remove();
-    getTrendingMovies(true, currentPage);
-  });
 }
 
 async function getMovieById(id) {

@@ -1,5 +1,9 @@
+let page = 1;
+let infiniteScroll;
+
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
+window.addEventListener('scroll', infiniteScroll);
 
 searchFormBtn.addEventListener('click', () => {
   location.hash = `#search=${searchFormInput.value.trim()}`;
@@ -14,6 +18,10 @@ arrowBtn.addEventListener('click', () => {
 })
 
 function navigator() {
+  if (infiniteScroll) {
+    window.removeEventListener('scroll', infiniteScroll, { passive: false });
+    infiniteScroll = undefined;
+  }
   location.hash.startsWith('#trends') ? trendsPage() :
   location.hash.startsWith('#search') ? searchPage() :
   location.hash.startsWith('#movie') ? movieDetailsPage() :
@@ -21,6 +29,10 @@ function navigator() {
   homePage()
 
   smoothScroll();
+
+  if (infiniteScroll) {
+    window.addEventListener('scroll', infiniteScroll, { passive: false });
+  }
 }
 
 function smoothScroll() {
@@ -30,6 +42,18 @@ function smoothScroll() {
     window.requestAnimationFrame(smoothScroll);
     window.scrollTo (0, currentScroll - (currentScroll / 5));
   }
+}
+
+function scrollIsOnThreshold() {
+  const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+  const scrollDiff = scrollHeight - (scrollTop + clientHeight)
+  const scrollBottom = scrollDiff <= 15;
+
+  if(scrollBottom) {
+    page++;
+  }
+
+  return scrollBottom;
 }
 
 function homePage() {
@@ -74,6 +98,12 @@ function categoriesPage() {
   const [categoryId, categoryName] = categoryUrl.split('-');
   headerCategoryTitle.textContent = decodeURI(categoryName).replace(/\b\w/g, c => c.toUpperCase());
   getMoviesByCategory(categoryId);
+
+  infiniteScroll = () => {
+    if (scrollIsOnThreshold()) {
+      getMoviesByCategory(categoryId, page);
+    }
+  }
 }
 
 function movieDetailsPage() {
@@ -117,6 +147,12 @@ function trendsPage() {
   genericSection.innerHTML = '';
   headerCategoryTitle.textContent = 'Tendencias';
   getTrendingMovies();
+
+  infiniteScroll = () => {
+    if (scrollIsOnThreshold()) {
+      getTrendingMovies(page);
+    }
+  }
 }
 
 function searchPage() {
@@ -136,6 +172,12 @@ function searchPage() {
 
   const [_, query] = location.hash.split('=');
   getMoviesBySearch(query);
+
+  infiniteScroll = () => {
+    if (scrollIsOnThreshold()) {
+      getMoviesBySearch(query, page);
+    }
+  }
 }
 
 function error404() {
