@@ -17,11 +17,15 @@ arrowBtn.addEventListener('click', () => {
   document.domain !== '127.0.0.1' ? location.hash = '#home': history.back();
 })
 
-function navigator() {
+function removeInfiniteScroll() {
   if (infiniteScroll) {
     window.removeEventListener('scroll', infiniteScroll, { passive: false });
     infiniteScroll = undefined;
   }
+}
+
+function navigator() {
+  removeInfiniteScroll();
   location.hash.startsWith('#trends') ? trendsPage() :
   location.hash.startsWith('#search') ? searchPage() :
   location.hash.startsWith('#movie') ? movieDetailsPage() :
@@ -97,11 +101,19 @@ function categoriesPage() {
   const [_, categoryUrl] = location.hash.split('=');
   const [categoryId, categoryName] = categoryUrl.split('-');
   headerCategoryTitle.textContent = decodeURI(categoryName).replace(/\b\w/g, c => c.toUpperCase());
-  getMoviesByCategory(categoryId);
+  getMoviesByCategory(categoryId).then(data => {
+    if (page === data.totalPages) {
+      removeInfiniteScroll();
+    }
+  });
 
   infiniteScroll = () => {
     if (scrollIsOnThreshold()) {
-      getMoviesByCategory(categoryId, page);
+      getMoviesByCategory(categoryId, page).then(data => {
+        if (page >= data.totalPages) {
+          removeInfiniteScroll();
+        }
+      });
     }
   }
 }
@@ -146,11 +158,19 @@ function trendsPage() {
 
   genericSection.innerHTML = '';
   headerCategoryTitle.textContent = 'Tendencias';
-  getTrendingMovies();
+  getTrendingMovies().then(data => {
+    if (page === data.totalPages) {
+      removeInfiniteScroll();
+    }
+  });
 
   infiniteScroll = () => {
     if (scrollIsOnThreshold()) {
-      getTrendingMovies(page);
+      getTrendingMovies(page).then(data => {
+        if (page >= data.totalPages) {
+          removeInfiniteScroll();
+        }
+      });
     }
   }
 }
@@ -171,11 +191,19 @@ function searchPage() {
   genericSection.innerHTML = '';
 
   const [_, query] = location.hash.split('=');
-  getMoviesBySearch(query);
+  getMoviesBySearch(query).then(data => {
+    if (page === data.totalPages) {
+      removeInfiniteScroll();
+    }
+  });
 
   infiniteScroll = () => {
     if (scrollIsOnThreshold()) {
-      getMoviesBySearch(query, page);
+      getMoviesBySearch(query, page).then(data => {
+        if (page >= data.totalPages) {
+          removeInfiniteScroll();
+        }
+      });
     }
   }
 }
