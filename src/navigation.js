@@ -1,9 +1,10 @@
+let maxPage;
 let page = 1;
 let infiniteScroll;
 
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
-window.addEventListener('scroll', infiniteScroll);
+window.addEventListener('scroll', infiniteScroll, false);
 
 searchFormBtn.addEventListener('click', () => {
   location.hash = `#search=${searchFormInput.value.trim()}`;
@@ -101,21 +102,9 @@ function categoriesPage() {
   const [_, categoryUrl] = location.hash.split('=');
   const [categoryId, categoryName] = categoryUrl.split('-');
   headerCategoryTitle.textContent = decodeURI(categoryName).replace(/\b\w/g, c => c.toUpperCase());
-  getMoviesByCategory(categoryId).then(data => {
-    if (page === data.totalPages) {
-      removeInfiniteScroll();
-    }
-  });
+  getMoviesByCategory(categoryId);
 
-  infiniteScroll = () => {
-    if (scrollIsOnThreshold()) {
-      getMoviesByCategory(categoryId, page).then(data => {
-        if (page >= data.totalPages) {
-          removeInfiniteScroll();
-        }
-      });
-    }
-  }
+  infiniteScroll = getPaginatedMoviesByCategory(categoryId);
 }
 
 function movieDetailsPage() {
@@ -158,21 +147,9 @@ function trendsPage() {
 
   genericSection.innerHTML = '';
   headerCategoryTitle.textContent = 'Tendencias';
-  getTrendingMovies().then(data => {
-    if (page === data.totalPages) {
-      removeInfiniteScroll();
-    }
-  });
+  getTrendingMovies();
 
-  infiniteScroll = () => {
-    if (scrollIsOnThreshold()) {
-      getTrendingMovies(page).then(data => {
-        if (page >= data.totalPages) {
-          removeInfiniteScroll();
-        }
-      });
-    }
-  }
+  infiniteScroll = getPaginatedTrendingMovies();
 }
 
 function searchPage() {
@@ -191,21 +168,9 @@ function searchPage() {
   genericSection.innerHTML = '';
 
   const [_, query] = location.hash.split('=');
-  getMoviesBySearch(query).then(data => {
-    if (page === data.totalPages) {
-      removeInfiniteScroll();
-    }
-  });
+  getMoviesBySearch(query);
 
-  infiniteScroll = () => {
-    if (scrollIsOnThreshold()) {
-      getMoviesBySearch(query, page).then(data => {
-        if (page >= data.totalPages) {
-          removeInfiniteScroll();
-        }
-      });
-    }
-  }
+  infiniteScroll = getPaginatedMoviesBySearch(query);
 }
 
 function error404() {
