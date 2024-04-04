@@ -111,11 +111,13 @@ function createMovies(movies, container) {
       const movieContainer = document.createElement('div');
       const movieImage = document.createElement('img');
       const movieSrc = movie.poster_path ? `${BASE_IMAGE_URL(300)}${movie.poster_path}` : `https://via.placeholder.com/300x450/5c218a/ffffff?text=${movie.title}`;
+      const likeButton = document.createElement('button');
 
       movieContainer.classList.add('movie-container');
       movieImage.classList.add('movie-img');
       movieImage.setAttribute('data-id', movie.id);
       movieImage.setAttribute('data-title', movie.title);
+      likeButton.classList.add('movie-button', 'inactive');
 
       if (intersectionObserverIsSupported) {
         movieImage.setAttribute('data-src', movieSrc);
@@ -127,9 +129,14 @@ function createMovies(movies, container) {
         }
       }
 
+      likeButton.addEventListener('click', () => {
+        likeButton.classList.toggle('movie-button--liked');
+      });
+
       registerImage(movieImage);
 
       movieContainer.appendChild(movieImage);
+      movieContainer.appendChild(likeButton);
       moviesList.push(movieContainer);
     })
 

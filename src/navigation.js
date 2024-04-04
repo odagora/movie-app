@@ -95,6 +95,7 @@ function categoriesPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+  likedMoviesSection.classList.add('inactive');
 
   genericSection.innerHTML = '';
   headerCategoryTitle.innerHTML = '';
@@ -122,6 +123,7 @@ function movieDetailsPage() {
   genericSection.classList.add('inactive');
   movieDetailSection.classList.remove('inactive');
   footerSection.classList.add('inactive');
+  likedMoviesSection.classList.add('inactive');
 
   movieDetails.innerHTML = '';
   movieDetailCategoriesList.innerHTML = '';
@@ -144,6 +146,7 @@ function trendsPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+  likedMoviesSection.classList.add('inactive');
 
   genericSection.innerHTML = '';
   headerCategoryTitle.textContent = 'Tendencias';
@@ -164,6 +167,7 @@ function searchPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+  likedMoviesSection.classList.add('inactive');
 
   genericSection.innerHTML = '';
 
