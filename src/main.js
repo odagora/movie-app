@@ -232,7 +232,7 @@ function likedMovieList() {
 function likeMovie(movie) {
   const likedMovies = likedMovieList();
 
-  likedMovies[movie.id] ? likedMovies[movie.id] = undefined : likedMovies[movie.id] = movie
+  likedMovies[movie.id] ? delete likedMovies[movie.id] : likedMovies[movie.id] = movie
 
   localStorage.setItem('liked-movies', JSON.stringify(likedMovies));
 }
