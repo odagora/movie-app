@@ -2,8 +2,8 @@ let maxPage;
 let page = 1;
 let infiniteScroll;
 
-window.addEventListener('DOMContentLoaded', navigator, false);
-window.addEventListener('hashchange', navigator, false);
+window.addEventListener('DOMContentLoaded', navigation, false);
+window.addEventListener('hashchange', navigation, false);
 window.addEventListener('scroll', infiniteScroll, false);
 
 searchFormBtn.addEventListener('click', () => {
@@ -25,7 +25,7 @@ function removeInfiniteScroll() {
   }
 }
 
-function navigator() {
+function navigation() {
   removeInfiniteScroll();
   location.hash.startsWith('#trends') ? trendsPage() :
   location.hash.startsWith('#search') ? searchPage() :
@@ -104,7 +104,10 @@ function categoriesPage() {
 
   const [_, categoryUrl] = location.hash.split('=');
   const [categoryId, categoryName] = categoryUrl.split('-');
-  headerCategoryTitle.textContent = decodeURI(categoryName).replace(/\b\w/g, c => c.toUpperCase());
+  const categoryTitle = decodeURI(categoryName);
+
+  headerCategoryTitle.textContent = categoryTitle.charAt(0).toUpperCase() + categoryTitle.slice(1);
+
   getMoviesByCategory(categoryId);
 
   infiniteScroll = getPaginatedMoviesByCategory(categoryId);
