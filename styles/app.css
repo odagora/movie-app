@@ -343,6 +343,7 @@ button {
 }
 
 .relatedMovies-scrollContainer .movie-container {
+  position: relative;
   display: inline-block;
   margin-right: 8px;
 }

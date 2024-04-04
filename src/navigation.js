@@ -126,10 +126,10 @@ function movieDetailsPage() {
   movieDetailSection.classList.remove('inactive');
   footerSection.classList.add('inactive');
   likedMoviesSection.classList.add('inactive');
+  relatedMoviesTitle.classList.add('inactive');
 
   movieDetails.innerHTML = '';
   movieDetailCategoriesList.innerHTML = '';
-  relatedMoviesTitle.innerHTML = '';
   relatedMoviesContainer.innerHTML = '';
 
   const [_, movieId] = location.hash.split('=');

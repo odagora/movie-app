@@ -391,6 +391,7 @@ async function getMovieById(id) {
   createMovieDetail(movie, movieDetails);
   createCategories(movie.genres, movieDetailCategoriesList);
   getRelatedMoviesById(movie.id);
+  relatedMoviesTitle.classList.remove('inactive');
 
   removeLoadingSkeletonContainer(movieDetails);
 }
