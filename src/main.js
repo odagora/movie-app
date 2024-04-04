@@ -105,42 +105,44 @@ categoriesNodes.forEach(node => node.addEventListener('click', (event) => {
 
 // Utils
 function createMovies(movies, container) {
-    const moviesList = []
+  const moviesList = []
 
-    movies.forEach(movie => {
-      const movieContainer = document.createElement('div');
-      const movieImage = document.createElement('img');
-      const movieSrc = movie.poster_path ? `${BASE_IMAGE_URL(300)}${movie.poster_path}` : `https://via.placeholder.com/300x450/5c218a/ffffff?text=${movie.title}`;
-      const likeButton = document.createElement('button');
+  movies.forEach(movie => {
+    const movieContainer = document.createElement('div');
+    const movieImage = document.createElement('img');
+    const movieSrc = movie.poster_path ? `${BASE_IMAGE_URL(300)}${movie.poster_path}` : `https://via.placeholder.com/300x450/5c218a/ffffff?text=${movie.title}`;
+    const likeButton = document.createElement('button');
 
-      movieContainer.classList.add('movie-container');
-      movieImage.classList.add('movie-img');
-      movieImage.setAttribute('data-id', movie.id);
-      movieImage.setAttribute('data-title', movie.title);
-      likeButton.classList.add('movie-button', 'inactive');
+    movieContainer.classList.add('movie-container');
+    movieImage.classList.add('movie-img');
+    movieImage.setAttribute('data-id', movie.id);
+    movieImage.setAttribute('data-title', movie.title);
+    likeButton.classList.add('movie-button', 'inactive');
 
-      if (intersectionObserverIsSupported) {
-        movieImage.setAttribute('data-src', movieSrc);
-        movieImage.setAttribute('data-alt', movie.title);
-      } else {
-        if (movie.poster_path !== null) {
-          movieImage.setAttribute('alt', movie.title);
-          movieImage.setAttribute('src', movieSrc);
-        }
+    if (intersectionObserverIsSupported) {
+      movieImage.setAttribute('data-src', movieSrc);
+      movieImage.setAttribute('data-alt', movie.title);
+    } else {
+      if (movie.poster_path !== null) {
+        movieImage.setAttribute('alt', movie.title);
+        movieImage.setAttribute('src', movieSrc);
       }
+    }
 
-      likeButton.addEventListener('click', () => {
-        likeButton.classList.toggle('movie-button--liked');
-      });
+    likeButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      likeButton.classList.toggle('movie-button--liked');
+      likeMovie(movie);
+    });
 
-      registerImage(movieImage);
+    registerImage(movieImage);
 
-      movieContainer.appendChild(movieImage);
-      movieContainer.appendChild(likeButton);
-      moviesList.push(movieContainer);
-    })
+    movieContainer.appendChild(movieImage);
+    movieContainer.appendChild(likeButton);
+    moviesList.push(movieContainer);
+  })
 
-    container.append(...moviesList)
+  container.append(...moviesList)
 }
 
 function createCategories(categories, container) {
@@ -218,6 +220,21 @@ function createButtonLoadMore(container) {
   container.appendChild(loadMoreButton);
 
   return loadMoreButton;
+}
+
+function likedMovieList() {
+  let movies;
+  const item = localStorage.getItem('liked-movies');
+
+  return item ? movies = JSON.parse(item) : movies = {};
+}
+
+function likeMovie(movie) {
+  const likedMovies = likedMovieList();
+
+  likedMovies[movie.id] ? likedMovies[movie.id] = undefined : likedMovies[movie.id] = movie
+
+  localStorage.setItem('liked-movies', JSON.stringify(likedMovies));
 }
 
 // API calls
