@@ -129,6 +129,8 @@ function createMovies(movies, container) {
       }
     }
 
+    likedMovieList()[movie.id] && likeButton.classList.toggle('movie-button--liked');
+
     likeButton.addEventListener('click', (event) => {
       event.stopPropagation();
       likeButton.classList.toggle('movie-button--liked');
@@ -235,6 +237,22 @@ function likeMovie(movie) {
   likedMovies[movie.id] ? delete likedMovies[movie.id] : likedMovies[movie.id] = movie
 
   localStorage.setItem('liked-movies', JSON.stringify(likedMovies));
+
+  if(location.hash === '') {
+    homePage();
+  }
+}
+
+function getLikedMovies() {
+  const likedMovies = likedMovieList();
+  console.log(likedMovies);
+  const moviesArray = Object.values(likedMovies);
+
+  likedMoviesListArticle.innerHTML = '';
+
+  !moviesArray.length && likedMoviesSection.classList.add('inactive');
+
+  createMovies(moviesArray, likedMoviesListArticle);
 }
 
 // API calls

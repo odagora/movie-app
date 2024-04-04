@@ -73,6 +73,7 @@ function homePage() {
   genericSection.classList.add('inactive');
   movieDetailSection.classList.add('inactive');
   footerSection.classList.remove('inactive');
+  likedMoviesSection.classList.remove('inactive');
 
   genericSection.innerHTML = '';
   searchFormInput.value = '';
@@ -81,6 +82,7 @@ function homePage() {
 
   getTrendingMoviesPreview();
   getCategoriesPreview();
+  getLikedMovies();
 }
 
 function categoriesPage() {

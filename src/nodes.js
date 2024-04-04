@@ -9,6 +9,7 @@ const genericSection = $("#genericList");
 const movieDetailSection = $("#movieDetail");
 const footerSection = $("#footer");
 const likedMoviesSection = $("#likedMovies");
+const likedMoviesListArticle = $(".liked-movieList");
 
 // Lists & Containers
 const searchForm = $("#searchForm");
