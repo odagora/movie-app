@@ -8,7 +8,7 @@ const api = axios.create({
   },
   params: {
     'api_key': API_KEY,
-    'language': navigator.language.split('-')[0] || 'en-US'
+    'language': localStorage.getItem('language') || navigator.language || 'en-US'
   }
 });
 
@@ -246,7 +246,6 @@ function likeMovie(movie) {
 
 function getLikedMovies() {
   const likedMovies = likedMovieList();
-  console.log(likedMovies);
   const moviesArray = Object.values(likedMovies);
 
   likedMoviesListArticle.innerHTML = '';

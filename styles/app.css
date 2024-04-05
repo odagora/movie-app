@@ -139,7 +139,10 @@ button {
   background: linear-gradient(180deg, rgba(238, 204, 117, 0.5) 0%, rgba(238, 204, 117, 0) 72.92%);
 }
 
-.header-title {
+.header-mainInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-bottom: 16px;
 }
 

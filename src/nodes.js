@@ -33,3 +33,4 @@ const movieDetailTitle = $(".movieDetail-title");
 const movieDetailDescription = $(".movieDetail-description");
 const movieDetailScore = $(".movieDetail-score");
 const relatedMoviesTitle = $(".relatedMovies-title");
+const languageMenu = $('#language');
