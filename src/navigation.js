@@ -23,10 +23,8 @@ arrowBtn.addEventListener('click', () => {
 })
 
 languageMenu.addEventListener('change', async () => {
-  const lang = languageMap[languageMenu.value] || 'en-US';
-
-  localStorage.setItem('language', lang);
-  api.defaults.params['language'] = lang;
+  const selectedLanguage = languageMenu.value;
+  changeLanguage(selectedLanguage);
 
   await Promise.all([
     getTrendingMoviesPreview(),
@@ -34,6 +32,26 @@ languageMenu.addEventListener('change', async () => {
     getLikedMovies()
   ])
 })
+
+function changeLanguage(language) {
+  const lang = languageMap[language] || 'en-US';
+  const elementsToTranslate = document.querySelectorAll('[data-translate]');
+
+  localStorage.setItem('language', lang);
+  api.defaults.params['language'] = lang;
+
+  elementsToTranslate.forEach(element => {
+    const key = element.dataset.translate;
+    const translation = translations[language] && translations[language][key]
+
+    if (element.tagName === 'INPUT' && element.type === 'text') {
+      element.placeholder = translation || key;
+    }
+    else {
+      element.textContent = translation || key;
+    }
+  })
+}
 
 function removeInfiniteScroll() {
   if (infiniteScroll) {
@@ -209,5 +227,3 @@ function searchPage() {
 function error404() {
   console.log('Page not found');
 }
-
-

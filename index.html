@@ -14,29 +14,29 @@
     <header id="header" class="header-container">
       <span class="header-arrow inactive">&lt;</span>
       <div class="header-mainInfo">
-        <h1 class="header-title">Movie App</h1>
+        <h1 class="header-title" data-translate="Movie App">Movie App</h1>
         <select name="language" id="language">
           <option value="en">English</option>
           <option value="es">Spanish</option>
           <option value="fr">French</option>
         </select>
       </div>
-      <h1 class="header-title header-title--categoryView inactive">Acción</h1>
+      <h1 class="header-title header-title--categoryView inactive">Action</h1>
       <form id="searchForm" class="header-searchForm">
-        <input type="text" placeholder="Vengadores">
+        <input type="text" placeholder="Search for a movie" data-translate="Search for a movie">
         <button id ="searchBtn">🔍</button>
       </form>
     </header>
     <section id="trendingPreview" class="trendingPreview-container">
       <div class="trendingPreview-header">
-        <h2 class="trendingPreview-title">Tendencias</h2>
-        <button class="trendingPreview-btn">Ver más</button>
+        <h2 class="trendingPreview-title" data-translate="Trends">Trends</h2>
+        <button class="trendingPreview-btn" data-translate="See more">See more</button>
       </div>
       <!-- To be filled dynamically -->
       <article class="trendingPreview-movieList"></article>
     </section>
     <section id="categoriesPreview" class="categoriesPreview-container">
-      <h2 class="categoriesPreview-title">Categorías</h2>
+      <h2 class="categoriesPreview-title" data-translate="Categories">Categories</h2>
       <!-- To be filled dynamically -->
       <article class="categoriesPreview-list" ></article>
     </section>
@@ -47,7 +47,7 @@
       <article class="movie-details" ></article>
       <article class="categories-list"></article>
       <article class="relatedMovies-container">
-        <h2 class="relatedMovies-title">Películas similares</h2>
+        <h2 class="relatedMovies-title" data-translate="Related movies">Related movies</h2>
         <div class="relatedMovies-scrollContainer">
           <div class="movie-container movie-container--loading"></div>
         <div class="movie-container movie-container--loading"></div>
@@ -57,16 +57,17 @@
     </section>
     <section id="likedMovies" class="liked-container">
       <div class="liked-header">
-          <h2 class="liked-title">Películas favoritas</h2>
+          <h2 class="liked-title" data-translate="Favorite movies">Favorite movies</h2>
       </div>
       <article class="liked-movieList"></article>
     </section>
-    <footer id="footer">Hecho por Daniel González</footer>
+    <footer id="footer" data-translate="Made by Daniel González">Made by Daniel González</footer>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./src/secrets.js"></script>
     <script src="./src/nodes.js"></script>
     <script src="./src/lazyloading.js"></script>
     <script src="./src/main.js"></script>
+    <script src="./src/translations.js"></script>
     <script src="./src/navigation.js"></script>
 </body>
 </html>
