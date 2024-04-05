@@ -116,7 +116,7 @@ function homePage() {
   trendingMoviesPreviewList.innerHTML = '';
   categoriesPreviewList.innerHTML = '';
 
-  languageMenu.value = localStorage.getItem('language').split('-')[0] || 'en-US';
+  languageMenu.value = localStorage.getItem('language')?.split('-')[0] || 'en';
 
   getTrendingMoviesPreview();
   getCategoriesPreview();
