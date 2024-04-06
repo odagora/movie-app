@@ -23,6 +23,6 @@ const options = {
 
 const observer = new IntersectionObserver(loadImage, options);
 
-const registerImage = (image) => {
+export const registerImage = (image) => {
   observer.observe(image);
 }
