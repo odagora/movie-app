@@ -1,5 +1,5 @@
-import * as nodes from "../ui/nodes.js";
-import { getLikedMovies } from "../utils/likedData.js";
+import * as nodes from "@ui/nodes.js";
+import { getLikedMovies } from "@utils/likedData.js";
 import {
   getTrendingMoviesPreview,
   getCategoriesPreview,

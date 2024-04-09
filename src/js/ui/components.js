@@ -1,6 +1,6 @@
-import { likedMovieList, likeMovie } from "../utils/likedData.js";
-import { registerImage } from "../utils/lazyloading.js";
-import { headerSection } from "./nodes.js";
+import { likedMovieList, likeMovie } from "@utils/likedData.js";
+import { registerImage } from "@utils/lazyloading.js";
+import { headerSection } from "@ui/nodes.js";
 
 const BASE_IMAGE_URL = (value) => `https://image.tmdb.org/t/p/w${value}`;
 

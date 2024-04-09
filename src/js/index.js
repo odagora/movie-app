@@ -1,9 +1,10 @@
-import * as nodes from "./ui/nodes.js";
-import { changeLanguage } from "./utils/translations.js";
-import { getLikedMovies } from "./utils/likedData.js";
-import { navigation } from "./routes/navigations.js";
-import { infiniteScroll } from "./routes/navigations.js";
-import { getTrendingMoviesPreview, getCategoriesPreview } from "./services/api.js";
+import '@styles/app.css';
+import * as nodes from "@ui/nodes.js";
+import { changeLanguage } from "@utils/translations.js";
+import { getLikedMovies } from "@utils/likedData.js";
+import { navigation } from "@routes/navigations.js";
+import { infiniteScroll } from "@routes/navigations.js";
+import { getTrendingMoviesPreview, getCategoriesPreview } from "@services/api.js";
 
 const moviesNodes = [
   nodes.trendingMoviesPreviewList,

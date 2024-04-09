@@ -1,6 +1,3 @@
-
-import { API_KEY } from "../../../secrets.js";
-
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 export const api = axios.create({
@@ -9,7 +6,7 @@ export const api = axios.create({
     'Content-Type': 'application/json;charset=utf-8',
   },
   params: {
-    'api_key': API_KEY,
+    'api_key': process.env.API_KEY,
     'language': localStorage.getItem('language') || navigator.language || 'en-US'
   }
 });

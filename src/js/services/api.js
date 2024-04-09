@@ -1,5 +1,5 @@
-import { api } from "./axiosClient.js";
-import * as nodes from '../ui/nodes.js';
+import { api } from "@services/axiosClient.js";
+import * as nodes from '@ui/nodes.js';
 import {
   addLoadingMoviesSkeleton,
   addLoadingCategoriesSkeleton,
